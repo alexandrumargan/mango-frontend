@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="application/x-www-form-urlencoded; charset=UTF-8"/>
+    <!-- <meta charset="utf-8"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inregistrare</title>
+    <style>
+      #loader {
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+        visibility: visible;
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        background: #fff;
+        z-index: 90000;
+      }
+
+      #loader.fadeOut {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+        background-color: #333;
+        border-radius: 100%;
+        -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+        animation: sk-scaleout 1.0s infinite ease-in-out;
+      }
+
+      @-webkit-keyframes sk-scaleout {
+        0% { -webkit-transform: scale(0) }
+        100% {
+          -webkit-transform: scale(1.0);
+          opacity: 0;
+        }
+      }
+
+      @keyframes sk-scaleout {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        } 100% {
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <body class="app">
+    <div id='loader'>
+      <div class="spinner"></div>
+    </div>
+
+    <script>
+      window.addEventListener('load', function load() {
+        const loader = document.getElementById('loader');
+        setTimeout(function() {
+          loader.classList.add('fadeOut');
+        }, 300);
+      });
+    </script>
+    <div class="peers ai-s fxw-nw h-100vh">
+      <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style='background-image: url("assets/static/images/bg.jpg")'>
+        <div class="pos-a centerXY">
+          <div class="bgc-white bdrs-50p pos-r" style='width: 120px; height: 120px;'>
+            <img class="pos-a centerXY" src="assets/static/images/logo.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
+        <h4 class="fw-300 c-grey-900 mB-40">Inregistrare</h4>
+        <form>
+          <div class="form-group">
+            <label class="text-normal text-dark">e-Mail</label>
+            <input id="email" type="email" class="form-control" Placeholder='John_Doe@mail.com'>
+          </div>
+          <div class="form-group">
+            <label class="text-normal text-dark">Prenume</label>
+            <input id="firstName" type="text" class="form-control" Placeholder='John'>
+          </div>
+          <div class="form-group">
+            <label class="text-normal text-dark">Nume</label>
+            <input id="lastName" type="text" class="form-control" Placeholder='Doe'>
+          </div>
+          <div class="form-group">
+            <label class="text-normal text-dark">Parola</label>
+            <input id="password" type="password" class="form-control" placeholder="Parola">
+          </div>
+          <div class="form-group">
+            <label class="text-normal text-dark">Confirmare Parola</label>
+            <input id="passwordConfirmation" type="password" class="form-control" placeholder="Parola">
+          </div>
+          <div class="form-group">
+            <a href="#" onclick="register()" role="button" class="btn btn-primary">Inregistrare</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script> 
+function register(){
+  const url = "https://mango-finance.herokuapp.com/user/signup";
+  var email = document.getElementById("email").value;
+  var firstName = document.getElementById("firstName").value;
+  var lastName = document.getElementById("lastName").value;
+  var password = document.getElementById("password").value;
+  var passwordConfirmation = document.getElementById("passwordConfirmation").value;
+  var data = String.concat("email=", email, "&", "firstName=", firstName, "&", "lastName=", lastName, "&", "password=", password)
+  console.log(data);
+
+  var xhr = new XMLHttpRequest();
+
+  if(password === passwordConfirmation) {
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+      // do something to response
+      console.log(this.responseText);
+    };
+    xhr.send(data);
+    window.location.replace("signin.html");
+  } else {
+    alert("Va rugam sa introduceti aceeasi parola!")
+  }
+}
+</script>
